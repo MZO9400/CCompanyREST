@@ -7,7 +7,7 @@ export default (req: Request, res: Response, next: NextFunction) => {
 
     if (token == null) return res.sendStatus(401)
 
-    jwt.verify(token, process.env.TOKEN_SECRET as string, (err: Error) => {
+    jwt.verify(token, process.env.SALT as string, (err: Error) => {
         if (err) return res.status(401).json({status: false, message: 'Token is not valid'})
         next()
     })
