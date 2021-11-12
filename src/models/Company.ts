@@ -1,4 +1,4 @@
-export interface Company {
+export default interface Company {
     name: string;
     phoneNumber: string;
     address: string;
