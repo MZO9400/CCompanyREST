@@ -57,7 +57,7 @@ const router = express.Router();
  *           type: string
  * */
 router.post('/', async (req, res) => {
-    const { password, email, name } = req.body;
+    const {password, email, name} = req.body;
 
     if (await emailExists(email)) {
         return res.status(400).json({status: false, message: 'User already exists'});

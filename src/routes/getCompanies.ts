@@ -84,8 +84,7 @@ router.get('/', authHandler, async (req, res) => {
             message: 'OK',
             data: await toICompany(companies)
         });
-    }
-    catch (e) {
+    } catch (e) {
         res.status(500).json({
             status: false,
             message: "Internal Server Error"
