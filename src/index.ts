@@ -1,7 +1,6 @@
 import express from 'express';
 import mongoose from 'mongoose'
 import { json } from 'body-parser';
-import { todoRouter } from './routes/todo'
 import swaggerJSDoc from 'swagger-jsdoc';
 import swaggerUI from 'swagger-ui-express';
 import * as dotenv from 'dotenv';
@@ -10,20 +9,33 @@ dotenv.config();
 
 const app = express()
 app.use(json())
-app.use(todoRouter)
 
-const swaggerOptions = {
+const apiSpecs = swaggerJSDoc({
   swaggerDefinition: {
+    openapi: "3.0.0",
     info: {
-      title:'C Company server API',
-      version:'1.0.0'
-    }
+      version: "1.0.0",
+      title: "C Company API Docs",
+      description: "API server for C Company",
+      contact: {
+        name: "Hamza",
+        url: "https://github.com/MZO9400",
+        email: "hamza.hameed00@gmail.com"
+      },
+    },
+    servers: [
+      {
+        url: "http://localhost:3000/"
+      }
+    ],
   },
-  apis:['index.ts'],
-}
-const swaggerDocs = swaggerJSDoc(swaggerOptions);
-app.use('/api-docs',swaggerUI.serve,swaggerUI.setup(swaggerDocs));
+  apis: [
+      ".//src/**/*.ts"
+  ]
+});
 
+app.use('/docs', swaggerUI.serve);
+app.get('/docs', swaggerUI.setup(apiSpecs, { explorer: true }));
 
 if (!process.env.MONGOURI) {
   throw new Error('MONGOURI is not defined');
