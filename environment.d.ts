@@ -1,10 +1,6 @@
-declare global {
-    namespace NodeJS {
-        interface ProcessEnv {
-            MONGOURI: string;
-            PORT?: string;
-        }
+declare namespace NodeJS {
+    export interface ProcessEnv {
+        MONGOURI: string;
+        PORT?: string;
     }
 }
-
-export {}
