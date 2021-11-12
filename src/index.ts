@@ -5,6 +5,7 @@ import swaggerJSDoc from 'swagger-jsdoc';
 import swaggerUI from 'swagger-ui-express';
 import * as dotenv from 'dotenv';
 import loginRouter from './routes/login';
+import registerRouter from './routes/register';
 import {options} from '../swaggerOptions';
 
 dotenv.config();
@@ -18,6 +19,7 @@ app.use('/docs', swaggerUI.serve);
 app.get('/docs', swaggerUI.setup(apiSpecs, { explorer: true }));
 
 app.use('/api/v1/login', loginRouter);
+app.use('/api/v1/login', registerRouter);
 
 if (!process.env.MONGOURI) {
   throw new Error('MONGOURI is not defined');
