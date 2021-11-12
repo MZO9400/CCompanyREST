@@ -13,6 +13,9 @@ export const options = {
         },
         servers: [
             {
+                url: "http://c-company.herokuapp.com/"
+            },
+            {
                 url: "http://localhost:3000/api/v1"
             }
         ],
