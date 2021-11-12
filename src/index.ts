@@ -4,6 +4,9 @@ import { json } from 'body-parser';
 import { todoRouter } from './routes/todo'
 import swaggerJSDoc from 'swagger-jsdoc';
 import swaggerUI from 'swagger-ui-express';
+import dotenv from 'dotenv';
+
+dotenv.config();
 
 const app = express()
 app.use(json())
@@ -21,14 +24,13 @@ const swaggerOptions = {
 const swaggerDocs = swaggerJSDoc(swaggerOptions);
 app.use('/api-docs',swaggerUI.serve,swaggerUI.setup(swaggerDocs));
 
-mongoose.connect('mongodb://localhost:27017/test-todo', {
+mongoose.connect(process.env.MONGOURI, {
   useNewUrlParser: true,
   useCreateIndex: true,
   useUnifiedTopology: true
-}, () => {
-  console.log('connected to database')
-})
+}).then(() => console.log('connected to mongoDB'))
+  .catch(e => console.log(e))
 
-app.listen(3000, () => {
-  console.log('server is listening on port 3000')
+app.listen(process.env.PORT, () => {
+  console.log(`server is listening on port ${process.env.PORT}`)
 })
