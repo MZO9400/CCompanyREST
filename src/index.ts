@@ -16,8 +16,8 @@ app.use(json())
 
 const apiSpecs = swaggerJSDoc(options);
 
-app.use('/docs', swaggerUI.serve);
-app.get('/docs', swaggerUI.setup(apiSpecs, { explorer: true }));
+app.use('/', swaggerUI.serve);
+app.get('/', swaggerUI.setup(apiSpecs, { explorer: true }));
 
 app.use('/api/v1/login', loginRouter);
 app.use('/api/v1/register', registerRouter);
