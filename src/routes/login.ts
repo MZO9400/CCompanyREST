@@ -1,5 +1,5 @@
 import express from 'express';
-import {IUser, UserModel} from "../models/User";
+import User, {IUser} from "../models/User";
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 
@@ -80,7 +80,7 @@ interface LoginResponse {
 router.post('/', (req, res) => {
   const { password, email } = req.body;
 
-  UserModel.findOne({ email }, (err: Error, user: IUser) => {
+  User.findOne({ email }, (err: Error, user: IUser) => {
     if (err) {
       res.status(500).json({status: false, message: "Internal Server Error"});
     } else if (!user) {
@@ -99,7 +99,6 @@ router.post('/', (req, res) => {
               },
               process.env.SALT,
               {
-                algorithm: 'RS256',
                 expiresIn: '365d'
               });
           const loginResponse : LoginResponse = {
