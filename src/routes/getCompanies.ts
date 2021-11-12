@@ -1,5 +1,6 @@
 import express from 'express';
 import authHandler from "../middleware/authHandler";
+import {getAllCompanies, toICompany} from "../models/Company";
 
 const router = express.Router();
 
@@ -75,8 +76,21 @@ const router = express.Router();
  *           example: Lorem ipsum dolor sit amet, consectetur adipiscing elit.
  *
  * */
-router.get('/', authHandler, (req, res) => {
-
+router.get('/', authHandler, async (req, res) => {
+    const companies = await getAllCompanies(process.env.MONGOURI ? process.env.MONGOURI : '');
+    try {
+        res.status(200).json({
+            status: true,
+            message: 'OK',
+            data: await toICompany(companies)
+        });
+    }
+    catch (e) {
+        res.status(500).json({
+            status: false,
+            message: "Internal Server Error"
+        })
+    }
 });
 
 
