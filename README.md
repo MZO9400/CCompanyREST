@@ -1,1 +1,0 @@
-# med-ts-node
