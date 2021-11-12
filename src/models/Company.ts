@@ -1,4 +1,3 @@
-import * as mongoose from "mongoose";
 import {MongoClient} from "mongodb";
 import {generateRandomPhoneNumber} from "../helpers/Company";
 import fetchRandomImage from "../helpers/Images";
@@ -15,46 +14,6 @@ export interface ICompany {
     description: string;
 
 }
-
-export interface ICompanyMongoose extends mongoose.Document, ICompany {}
-
-const companySchema = new mongoose.Schema(
-    {
-        name: {
-            type: String,
-            required: true,
-        },
-        phoneNumber: {
-            type: String,
-            required: true,
-        },
-        address: {
-            type: String,
-            required: true,
-        },
-        geolocation: {
-            lat: {
-                type: Number,
-                required: true,
-            },
-            lng: {
-                type: Number,
-                required: true,
-            },
-        },
-        logo: {
-            type: String,
-            required: false,
-        },
-        description: {
-            type: String,
-            required: true,
-        },
-    },
-    {
-        timestamps: true,
-    }
-);
 
 export const getAllCompanies = (URL: string): Promise<any> => {
     return new Promise((res, rej) => {
@@ -95,5 +54,3 @@ export const toICompany = async (data: any[]): Promise<ICompany[]> => {
         Promise.all(promises).then(res).catch(rej)
     })
 }
-
-export const CompanyModel = mongoose.model<ICompanyMongoose>("Company", companySchema);
