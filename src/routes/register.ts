@@ -2,6 +2,7 @@ import express from 'express';
 import User from "../models/User";
 import bcrypt from 'bcrypt';
 import {emailExists} from "../helpers/User";
+import jwt from "jsonwebtoken";
 
 const router = express.Router();
 
@@ -16,7 +17,7 @@ const router = express.Router();
  *           content:
  *             application/json:
  *               schema:
- *                 $ref: '#/components/schemas/GeneralResponse'
+ *                 $ref: '#/components/schemas/RegisterResponse'
  *         '500':
  *           description: Internal Server Error
  *           content:
@@ -55,6 +56,15 @@ const router = express.Router();
  *           type: string
  *         name:
  *           type: string
+ *     RegisterResponse:
+ *       type: object
+ *       properties:
+ *         token:
+ *           type: string
+ *         status:
+ *           type: boolean
+ *         message:
+ *           type: string
  * */
 router.post('/', async (req, res) => {
     const {password, email, name} = req.body;
@@ -73,7 +83,11 @@ router.post('/', async (req, res) => {
                 name
             });
             user.save()
-                .then(() => res.status(200).json({status: true, message: 'User created'}))
+                .then(() => res.status(200).json({
+                    status: true,
+                    message: 'User created',
+                    token: jwt.sign({email}, process.env.SALT, {expiresIn: '365d'})
+                }))
                 .catch(() => res.status(500).json({status: false, message: "Internal Server Error"}));
         }
     });
