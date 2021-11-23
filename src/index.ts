@@ -1,5 +1,7 @@
+import http from 'http';
 import express from 'express';
 import mongoose from 'mongoose'
+import enforce from 'express-sslify';
 import {json} from 'body-parser';
 import swaggerJSDoc from 'swagger-jsdoc';
 import swaggerUI from 'swagger-ui-express';
@@ -12,6 +14,7 @@ import getCompanies from "./routes/getCompanies";
 dotenv.config();
 
 const app = express()
+app.use(enforce.HTTPS({ trustProtoHeader: true }))
 app.use(json())
 
 const apiSpecs = swaggerJSDoc(options);
@@ -31,6 +34,6 @@ mongoose.connect(process.env.MONGOURI, {
     useUnifiedTopology: true
 }, () => console.log("Connected to MongoDB"))
 
-app.listen(process.env.PORT, () => {
+http.createServer(app).listen(process.env.PORT, () => {
     console.log(`server is listening on port ${process.env.PORT}`)
 })
