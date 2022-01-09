@@ -4,11 +4,11 @@ import fetchRandomImage from "../helpers/Images";
 
 export interface ICompany {
     name: string;
-    phoneNumber: string;
+    phone: string;
     address: string;
     geolocation: {
-        lat: number;
-        lng: number;
+        latitude: number;
+        longitude: number;
     };
     logo?: string;
     description: string;
@@ -40,11 +40,11 @@ export const toICompany = async (data: any[]): Promise<ICompany[]> => {
         const promises = data.map(async (company: any) => ({
             id: company._id,
             name: company.name,
-            phoneNumber: generateRandomPhoneNumber(),
+            phone: generateRandomPhoneNumber(),
             address: company.vicinity,
             geolocation: {
-                lat: company.geometry.location.lat,
-                lng: company.geometry.location.lng,
+                latitude: company.geometry.location.lat,
+                longitude: company.geometry.location.lng,
             },
             logo: await fetchRandomImage(),
             description: company.types.map(
