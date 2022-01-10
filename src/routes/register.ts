@@ -86,7 +86,7 @@ router.post('/', async (req, res) => {
                 .then(() => res.status(200).json({
                     status: true,
                     message: 'User created',
-                    token: jwt.sign({email}, process.env.SALT, {expiresIn: '365d'})
+                    token: jwt.sign({email}, process.env.SALT as string, {expiresIn: '365d'})
                 }))
                 .catch(() => res.status(500).json({status: false, message: "Internal Server Error"}));
         }
