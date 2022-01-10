@@ -1,0 +1,6 @@
+commonLabels:
+  app: CCompanyREST
+  resources:
+    - deployment.yaml
+    - service.yaml
+    - autoscalegroup.yml

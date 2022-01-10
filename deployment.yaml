@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: CCompanyREST
+  name: c-company-rest-deployment
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: c-company-rest-deployment
+  template:
+    metadata:
+      labels:
+        app: c-company-rest-deployment
+    spec:
+      containers:
+        - image: mzo9400/ccompany:latest
+          imagePullPolicy: IfNotPresent
+          name: c-company-rest-deployment
+      dnsPolicy: ClusterFirst
+      restartPolicy: Always
