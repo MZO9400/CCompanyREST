@@ -3,5 +3,8 @@ declare namespace NodeJS {
         MONGOURI: string;
         PORT?: string;
         SALT: string;
+        REDISURL: string;
+        REDISPORT: string;
+        REDISPASSWORD: string;
     }
 }

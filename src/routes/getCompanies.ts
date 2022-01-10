@@ -1,8 +1,30 @@
-import express from 'express';
+import express, {NextFunction, Request, Response} from 'express';
 import authHandler from "../middleware/authHandler";
 import {getAllCompanies, toICompany} from "../models/Company";
+import redisInstance from "../helpers/RedisInstance";
+
+const CACHE = 'companies';
 
 const router = express.Router();
+
+const cacheMiddleware = (req: Request, res: Response, next: NextFunction) => {
+    redisInstance
+        .getInstance()
+        .get(CACHE)
+        .then((data: string | null) => {
+            if (data) {
+                res.status(200).json({
+                    status: true, message: 'OK', data: JSON.parse(data)
+                });
+            } else {
+                throw new Error('No data');
+            }
+        })
+        .catch(() => {
+            next();
+        });
+}
+
 
 /**
  * @swagger
@@ -76,18 +98,17 @@ const router = express.Router();
  *           example: Lorem ipsum dolor sit amet, consectetur adipiscing elit.
  *
  * */
-router.get('/', authHandler, async (req, res) => {
+router.get('/', authHandler, cacheMiddleware, async (req, res) => {
     const companies = await getAllCompanies(process.env.MONGOURI ? process.env.MONGOURI : '');
     try {
+        const result = await toICompany(companies)
         res.status(200).json({
-            status: true,
-            message: 'OK',
-            data: await toICompany(companies)
+            status: true, message: 'OK', data: result
         });
+        await redisInstance.getInstance().set(CACHE, JSON.stringify(result));
     } catch (e) {
         res.status(500).json({
-            status: false,
-            message: "Internal Server Error"
+            status: false, message: "Internal Server Error"
         })
     }
 });
