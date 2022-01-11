@@ -2,21 +2,21 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   labels:
-    app: c-company-rest-deployment
-  name: c-company-rest-deployment
+    app: c-company-rest
+  name: c-company-rest
 spec:
   replicas: 3
   selector:
     matchLabels:
-      app: c-company-rest-deployment
+      app: c-company-rest
   template:
     metadata:
       labels:
-        app: c-company-rest-deployment
+        app: c-company-rest
     spec:
       containers:
         - image: ghcr.io/mzo9400/ccompanyrest:master
-          name: c-company-rest-deployment
+          name: c-company-rest
           envFrom:
             - secretRef:
                 name: ccompany-secrets
