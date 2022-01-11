@@ -2,7 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   labels:
-    app: CCompanyREST
+    app: c-company-rest-deployment
   name: c-company-rest-deployment
 spec:
   replicas: 3
@@ -15,8 +15,11 @@ spec:
         app: c-company-rest-deployment
     spec:
       containers:
-        - image: mzo9400/ccompany:latest
-          imagePullPolicy: IfNotPresent
+        - image: ghcr.io/mzo9400/ccompanyrest:master
           name: c-company-rest-deployment
+          ports:
+            - containerPort: 3000
+              protocol: TCP
       dnsPolicy: ClusterFirst
       restartPolicy: Always
+
