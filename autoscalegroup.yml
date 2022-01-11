@@ -6,7 +6,7 @@ spec:
   scaleTargetRef:
     apiVersion: apps/v1
     kind: Deployment
-    name: c-company-rest-node
+    name: c-company-rest-deployment
   minReplicas: 1
   maxReplicas: 10
   targetCPUUtilizationPercentage: 85
