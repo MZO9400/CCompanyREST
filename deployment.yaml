@@ -17,6 +17,9 @@ spec:
       containers:
         - image: ghcr.io/mzo9400/ccompanyrest:master
           name: c-company-rest-deployment
+          envFrom:
+            - secretRef:
+                name: ccompany-secrets
           ports:
             - containerPort: 3000
               protocol: TCP

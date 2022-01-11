@@ -4,6 +4,7 @@ kind: Kustomization
 commonLabels:
   app: CCompanyREST
 resources:
+  - ccompany-secrets.yaml
   - deployment.yaml
   - service.yaml
   - autoscalegroup.yml
