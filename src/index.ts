@@ -1,7 +1,6 @@
 import http from 'http';
 import express from 'express';
 import mongoose from 'mongoose'
-import enforce from 'express-sslify';
 import {json} from 'body-parser';
 import swaggerJSDoc from 'swagger-jsdoc';
 import swaggerUI from 'swagger-ui-express';
@@ -13,8 +12,7 @@ import getCompanies from "./routes/getCompanies";
 
 dotenv.config();
 
-const app = express()
-app.use(enforce.HTTPS({ trustProtoHeader: true }))
+const app = express();
 app.use(json())
 
 const apiSpecs = swaggerJSDoc(options);
