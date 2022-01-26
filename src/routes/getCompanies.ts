@@ -98,7 +98,7 @@ const cacheMiddleware = (req: Request, res: Response, next: NextFunction) => {
  *           example: Lorem ipsum dolor sit amet, consectetur adipiscing elit.
  *
  * */
-router.get('/', authHandler, cacheMiddleware, async (req, res) => {
+router.get('/', cacheMiddleware, async (req, res) => {
     const companies = await getAllCompanies(process.env.MONGOURI ? process.env.MONGOURI : '');
     try {
         const result = await toICompany(companies)
