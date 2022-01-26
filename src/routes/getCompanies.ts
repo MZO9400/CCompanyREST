@@ -92,7 +92,7 @@ const cacheMiddleware = (req: Request, res: Response, next: NextFunction) => {
  *               example: -122.0842499
  *         logo:
  *           type: string
- *           example: https://www.example.com/logo.png
+ *           example: data:image/jpeg;base64,.....
  *         description:
  *           type: string
  *           example: Lorem ipsum dolor sit amet, consectetur adipiscing elit.
